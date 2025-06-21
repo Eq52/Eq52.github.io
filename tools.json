@@ -1,0 +1,44 @@
+[
+  {
+    "title": "吐槽墙",
+    "desc": "匿名畅所欲言的留言墙，轻松表达你的想法与心情。",
+    "url": "https://ericq.rth2.xyz/Hobby/test6/",
+    "tags": ["娱乐", "工具"]
+  },
+  {
+    "title": "AI 提示词",
+    "desc": "收集与生成AI相关的提示词（prompts），助力AI对话与创作。",
+    "url": "https://ericq.rth2.xyz/Hobby/test2/",
+    "tags": ["AI", "工具"]
+  },
+  {
+    "title": "在线Markdown编辑器",
+    "desc": "支持实时预览、导出等功能的Markdown在线编辑工具。",
+    "url": "https://stackedit.io/",
+    "tags": ["工具", "资源"]
+  },
+  {
+    "title": "Pexels 免费图片库",
+    "desc": "免费可商用高质量图片资源，适合设计、写作配图。",
+    "url": "https://www.pexels.com/zh-cn/",
+    "tags": ["资源"]
+  },
+  {
+    "title": "Pexels主页",
+    "desc": "站长的Pexels主页。",
+    "url": "https://www.pexels.com/@eric-q-2153295067/gallery/",
+    "tags": ["资源"]
+  },
+  {
+    "title": "随机表情生成器",
+    "desc": "娱乐小工具，生成各种风格的随机表情和符号。",
+    "url": "https://tools.lu/emoji.html",
+    "tags": ["娱乐", "工具", "其他"]
+  },
+  {
+    "title": "ChatGPT 镜像站",
+    "desc": "无需VPN，便捷体验AI对话（第三方社区服务）。",
+    "url": "https://chat.tinycms.xyz/",
+    "tags": ["AI", "工具", "其他"]
+  }
+]
