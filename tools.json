@@ -36,9 +36,15 @@
     "tags": ["娱乐", "工具", "其他"]
   },
   {
-    "title": "ChatGPT 镜像站",
-    "desc": "无需VPN即可便捷体验AI对话，由社区维护的ChatGPT镜像服务，支持网页版和移动端。",
-    "url": "https://chat.tinycms.xyz/",
+    "title": "ChatGPT Plus",
+    "desc": "无需VPN,无需登录，可免费使用gpt4.1、gpt-4o-mini、deepseek等",
+    "url": "https://site.tinycms.xyz/",
+    "tags": ["AI", "工具", "其他"]
+  },
+  {
+    "title": "EasyGPT",
+    "desc": "简单的AI使用方式, 无需登录, 无限制使用部分模型; 登录可用4.0等高阶模型.",
+    "url": "https://site.eqing.tech/",
     "tags": ["AI", "工具", "其他"]
   },
   {
