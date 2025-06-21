@@ -3,7 +3,7 @@
     "title": "吐槽墙",
     "desc": "匿名畅所欲言的留言墙，轻松表达你的想法、情绪或趣事。可留言、回复、点赞，适合分享日常和小秘密。",
     "url": "https://ericq.rth2.xyz/Hobby/test6/",
-    "tags": ["娱乐", "工具"]
+    "tags": ["娱乐"]
   },
   {
     "title": "AI 提示词生成器",
@@ -15,7 +15,7 @@
     "title": "在线Markdown编辑器",
     "desc": "支持实时预览、导出及多窗口协作的Markdown在线编辑工具。适合笔记、写作、博客草稿，高效简洁。",
     "url": "https://stackedit.io/",
-    "tags": ["工具", "资源"]
+    "tags": ["工具"]
   },
   {
     "title": "Pexels 免费图片库",
@@ -27,7 +27,7 @@
     "title": "Pexels站长图库",
     "desc": "网站站长Eric的Pexels个人图库，精选摄影作品分享，可免费下载和使用。",
     "url": "https://www.pexels.com/@eric-q-2153295067/gallery/",
-    "tags": ["资源", "娱乐"]
+    "tags": ["资源", "其他"]
   },
   {
     "title": "随机表情生成器",
@@ -39,25 +39,25 @@
     "title": "ChatGPT Plus",
     "desc": "无需VPN,无需登录，可免费使用gpt4.1、gpt-4o-mini、deepseek等",
     "url": "https://site.tinycms.xyz/",
-    "tags": ["AI", "工具", "其他"]
+    "tags": ["AI", "工具"]
   },
   {
     "title": "EasyGPT",
     "desc": "简单的AI使用方式, 无需登录, 无限制使用部分模型; 登录可用4.0等高阶模型.",
     "url": "https://site.eqing.tech/",
-    "tags": ["AI", "工具", "其他"]
+    "tags": ["AI", "工具"]
   },
   {
     "title": "Canva 在线设计",
     "desc": "强大易用的在线平面设计工具，提供海量模板、图片和字体，适合新手和专业设计师。",
     "url": "https://www.canva.cn/",
-    "tags": ["工具", "资源"]
+    "tags": ["工具"]
   },
   {
     "title": "TinyPNG 图片压缩",
     "desc": "高效图片压缩工具，支持PNG、JPG等格式，最大程度减少图片体积，提升网页加载速度。",
     "url": "https://tinypng.com/",
-    "tags": ["工具", "资源"]
+    "tags": ["工具"]
   },
   {
     "title": "网易云音乐网页版",
@@ -69,7 +69,7 @@
     "title": "草料二维码生成器",
     "desc": "专业二维码生成与管理，支持多种内容批量生成、美化、统计和活码管理。",
     "url": "https://cli.im/",
-    "tags": ["工具", "其他"]
+    "tags": ["工具"]
   },
   {
     "title": "ProcessOn 在线思维导图",
@@ -99,6 +99,6 @@
     "title": "阿虚同学的储物间",
     "desc": "收集整理各种优质互联网资源的导航，涵盖影视、音乐、软件、学习等多个领域。",
     "url": "https://axutongxue.com/",
-    "tags": ["资源", "其他"]
+    "tags": ["资源"]
   }
 ]
