@@ -1,44 +1,100 @@
+```json name=tools.json
 [
   {
     "title": "吐槽墙",
-    "desc": "匿名畅所欲言的留言墙，轻松表达你的想法与心情。",
+    "desc": "匿名畅所欲言的留言墙，轻松表达你的想法、情绪或趣事。可留言、回复、点赞，适合分享日常和小秘密。",
     "url": "https://ericq.rth2.xyz/Hobby/test6/",
     "tags": ["娱乐", "工具"]
   },
   {
-    "title": "AI 提示词",
-    "desc": "收集与生成AI相关的提示词（prompts），助力AI对话与创作。",
+    "title": "AI 提示词生成器",
+    "desc": "收集与生成AI相关的提示词（prompts），助力ChatGPT、Midjourney等AI对话与创作，支持分类、分享与收藏。",
     "url": "https://ericq.rth2.xyz/Hobby/test2/",
     "tags": ["AI", "工具"]
   },
   {
     "title": "在线Markdown编辑器",
-    "desc": "支持实时预览、导出等功能的Markdown在线编辑工具。",
+    "desc": "支持实时预览、导出及多窗口协作的Markdown在线编辑工具。适合笔记、写作、博客草稿，高效简洁。",
     "url": "https://stackedit.io/",
     "tags": ["工具", "资源"]
   },
   {
     "title": "Pexels 免费图片库",
-    "desc": "免费可商用高质量图片资源，适合设计、写作配图。",
+    "desc": "免费可商用高质量图片资源，适合网页设计、写作配图等支持多语言搜索和多种类别筛选。",
     "url": "https://www.pexels.com/zh-cn/",
-    "tags": ["资源"]
+    "tags": ["资源", "工具"]
   },
   {
-    "title": "Pexels主页",
-    "desc": "站长的Pexels主页。",
+    "title": "Pexels站长图库",
+    "desc": "网站站长Eric的Pexels个人图库，精选摄影作品分享，可免费下载和使用。",
     "url": "https://www.pexels.com/@eric-q-2153295067/gallery/",
-    "tags": ["资源"]
+    "tags": ["资源", "娱乐"]
   },
   {
     "title": "随机表情生成器",
-    "desc": "娱乐小工具，生成各种风格的随机表情和符号。",
+    "desc": "娱乐小工具，生成各种风格的随机表情、颜文字和特殊符号，可一键复制，适合社交和装饰。",
     "url": "https://tools.lu/emoji.html",
     "tags": ["娱乐", "工具", "其他"]
   },
   {
     "title": "ChatGPT 镜像站",
-    "desc": "无需VPN，便捷体验AI对话（第三方社区服务）。",
+    "desc": "无需VPN即可便捷体验AI对话，由社区维护的ChatGPT镜像服务，支持网页版和移动端。",
     "url": "https://chat.tinycms.xyz/",
     "tags": ["AI", "工具", "其他"]
+  },
+  {
+    "title": "Canva 在线设计",
+    "desc": "强大易用的在线平面设计工具，提供海量模板、图片和字体，适合新手和专业设计师。",
+    "url": "https://www.canva.cn/",
+    "tags": ["工具", "资源"]
+  },
+  {
+    "title": "TinyPNG 图片压缩",
+    "desc": "高效图片压缩工具，支持PNG、JPG等格式，最大程度减少图片体积，提升网页加载速度。",
+    "url": "https://tinypng.com/",
+    "tags": ["工具", "资源"]
+  },
+  {
+    "title": "网易云音乐网页版",
+    "desc": "热门在线音乐平台，支持音乐搜索、歌单管理和在线试听，适合日常学习与娱乐。",
+    "url": "https://music.163.com/",
+    "tags": ["娱乐", "资源"]
+  },
+  {
+    "title": "草料二维码生成器",
+    "desc": "专业二维码生成与管理，支持多种内容批量生成、美化、统计和活码管理。",
+    "url": "https://cli.im/",
+    "tags": ["工具", "其他"]
+  },
+  {
+    "title": "ProcessOn 在线思维导图",
+    "desc": "强大的在线思维导图与流程图工具，支持协作与云存储，适合团队头脑风暴与项目梳理。",
+    "url": "https://www.processon.com/",
+    "tags": ["工具", "效率"]
+  },
+  {
+    "title": "Wolai 在线知识库",
+    "desc": "高效的个人/团队在线笔记与知识管理工具，支持文档、表格、数据库等多种内容嵌入。",
+    "url": "https://www.wolai.com/",
+    "tags": ["工具", "效率", "资源"]
+  },
+  {
+    "title": "Unsplash 免费图片",
+    "desc": "高质量无版权图片库，适合设计、博客、演示文稿配图，支持多语言搜索。",
+    "url": "https://unsplash.com/",
+    "tags": ["资源", "工具"]
+  },
+  {
+    "title": "PDF24 Tools",
+    "desc": "功能丰富的PDF在线工具，支持合并、分割、压缩、转换、编辑等多种操作，完全免费。",
+    "url": "https://tools.pdf24.org/zh/",
+    "tags": ["工具", "效率"]
+  },
+  {
+    "title": "阿虚同学的储物间",
+    "desc": "收集整理各种优质互联网资源的导航，涵盖影视、音乐、软件、学习等多个领域。",
+    "url": "https://axutongxue.com/",
+    "tags": ["资源", "其他"]
   }
 ]
+```
