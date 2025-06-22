@@ -40,72 +40,6 @@ function updateGradientBg() {
 }
 updateGradientBg();
 
-// 粒子特效
-const canvas = document.getElementById('particles-canvas');
-let ctx = canvas.getContext('2d');
-let particles = [];
-function resizeParticlesCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeParticlesCanvas);
-resizeParticlesCanvas();
-
-function createParticle(isDark) {
-  let color;
-  if (isDark) {
-    color = Math.random() < 0.7 ? 'rgba(143,209,225,0.36)' : 'rgba(254,220,94,0.23)';
-  } else {
-    color = Math.random() < 0.7 ? 'rgba(143,209,225,0.44)' : 'rgba(254,220,94,0.32)';
-  }
-  return {
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.18,
-    vy: (Math.random() - 0.5) * 0.18,
-    radius: 2.2 + Math.random() * 3.6,
-    color: color
-  }
-}
-function drawParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const isDark = document.body.classList.contains('dark');
-  while (particles.length < 90) {
-    particles.push(createParticle(isDark));
-  }
-  for (let i = 0; i < particles.length; i++) {
-    let p = particles[i];
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-    ctx.fillStyle = p.color;
-    ctx.shadowColor = p.color;
-    ctx.shadowBlur = isDark ? 16 : 8;
-    ctx.fill();
-    ctx.restore();
-
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0) p.x = canvas.width;
-    if (p.x > canvas.width) p.x = 0;
-    if (p.y < 0) p.y = canvas.height;
-    if (p.y > canvas.height) p.y = 0;
-  }
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-function refreshParticlesColor() {
-  let isDark = document.body.classList.contains('dark');
-  for (let p of particles) {
-    if (isDark) {
-      p.color = Math.random() < 0.7 ? 'rgba(143,209,225,0.36)' : 'rgba(254,220,94,0.23)';
-    } else {
-      p.color = Math.random() < 0.7 ? 'rgba(143,209,225,0.44)' : 'rgba(254,220,94,0.32)';
-    }
-  }
-}
-
 // 工具数据从tools.json加载
 let tools = [];
 fetch('tools.json')
@@ -217,7 +151,7 @@ window.addEventListener('resize', ()=>{
   if(window.innerWidth > 700){
     closeMenu();
   }
-  resizeParticlesCanvas();
+  // resizeParticlesCanvas(); // 注释：粒子canvas已移除
 });
 document.addEventListener('keydown', (e) => {
   // ESC 关闭侧边栏
@@ -246,7 +180,7 @@ function loadTheme() {
   } else {
     checkSystemTheme();
   }
-  refreshParticlesColor();
+
 }
 function saveTheme() {
   localStorage.setItem('nav-theme', isDark ? 'dark' : 'light');
@@ -254,7 +188,7 @@ function saveTheme() {
 themeToggle.addEventListener('click', function(){
   isDark = !isDark;
   document.body.classList.toggle('dark', isDark);
-  refreshParticlesColor();
+
   saveTheme();
   renderTools(currentTag, currentKeyword);
 });
