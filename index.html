@@ -11,7 +11,6 @@
 </head>
 <body>
   <div id="bg-gradient"></div>
-  <canvas id="particles-canvas"></canvas>
   <header>
     <button class="hamburger" id="hamburger" aria-label="菜单" aria-controls="sidebar" aria-expanded="false" tabindex="0">
       <svg class="lines" viewBox="0 0 32 32" fill="none" stroke-width="3" stroke-linecap="round">
@@ -80,5 +79,15 @@
     </main>
   </div>
   <script src="main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1.0.1/dist/canvas-nest.min.js"></script>
+  <script>
+    window.NestConfig = {
+      color: '143,209,225',
+      opacity: 0.6,
+      count: 88,
+      zIndex: -2,
+      pointColor: '254,220,94'
+    };
+  </script>
 </body>
 </html>
