@@ -1,0 +1,13 @@
+tree 540b1f4b97e4816d399bbdef60aaa30384e3ec1c
+parent 5a9b80adf759adb076f075e2060edd5bd59abfb1
+author Eq52 <214134847+Eq52@users.noreply.github.com> 1780415621 +0000
+committer Eq52 <214134847+Eq52@users.noreply.github.com> 1780415621 +0000
+
+fix: rewrite GitHub Alerts detection with HTML marker approach
+
+- Replace unreliable text-based detectAlert() with HTML <div> marker injection
+- preprocessAlerts() now injects <div class='github-alert-marker-TYPE'>
+  which survives rehype-raw + rehype-sanitize pipeline
+- blockquote component detects marker by className instead of parsing text
+- Fixes: alerts always rendering gray, content escaping blockquote
+- Simplify <details> styling: background color + open highlight, dark mode

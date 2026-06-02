@@ -1,0 +1,10 @@
+fix: alerts color + details visible background + hover highlight
+
+- Add preprocessAlerts() to insert blank line after [!TYPE] markers
+  ensuring remark-parse creates separate <p> nodes (root cause of gray alerts)
+- Dual detectAlert: primary regex for standalone paragraph, fallback for inline
+- details: bg-muted/40 background (visible on both themes), hover border highlight,
+  open state with bg-muted/60 + purple tint
+- summary: rounded-t-xl, semibold, hover:bg-muted/60
+- CSS fallback: update details:not([class]) with matching visible backgrounds
+  and open-state purple tint for both light/dark modes
