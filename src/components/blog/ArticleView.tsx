@@ -27,6 +27,10 @@ import { siteConfig } from '@/lib/site-config'
 import { type ArticleData } from '@/lib/article-utils'
 import CommentSection from './CommentSection'
 import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import remarkFootnotes from 'remark-footnotes'
+import remarkEmoji from 'remark-emoji'
+import rehypeKatex from 'rehype-katex'
 import rehypeSanitize from 'rehype-sanitize'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeRaw from 'rehype-raw'
@@ -379,20 +383,47 @@ export default function ArticleView({ article }: ArticleViewProps) {
       {/* Article Content */}
       <article className="article-content mb-10">
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={[remarkGfm, remarkMath, remarkFootnotes, remarkEmoji]}
           rehypePlugins={[
             rehypeRaw,
+            rehypeKatex,
             rehypeAutolinkHeadings,
             [
               rehypeSanitize,
               {
                 attributes: {
-                  '*': ['className', 'id'],
+                  '*': ['className', 'id', 'style'],
                   a: ['href', 'target', 'rel', 'dataFootnoteRef', 'dataFootnoteBackref', 'ariaDescribedby', 'ariaLabel'],
                   img: ['src', 'alt', 'loading', 'className'],
                   code: ['className'],
                   pre: ['className'],
                   section: ['dataFootnotes'],
+                  span: ['className', 'style', 'dataKatexDisplay'],
+                  math: ['display', 'className'],
+                  annotation: ['encoding', 'src'],
+                  semantics: [],
+                  mrow: [],
+                  mi: [],
+                  mn: [],
+                  mo: [],
+                  msup: [],
+                  msub: [],
+                  msubsup: [],
+                  mfrac: [],
+                  msqrt: [],
+                  mroot: [],
+                  mtable: [],
+                  mtr: [],
+                  mtd: [],
+                  munder: [],
+                  mover: [],
+                  munderover: [],
+                  mspace: [],
+                  mtext: [],
+                  merror: [],
+                  mpadded: [],
+                  mphantom: [],
+                  menclose: [],
                 },
               },
             ],

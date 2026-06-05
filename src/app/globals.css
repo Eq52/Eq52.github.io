@@ -140,6 +140,94 @@
   color: oklch(0.82 0 0);
 }
 
+/* ===== Math (KaTeX) Styling ===== */
+.article-content .math {
+  font-size: 1.05em;
+}
+.article-content .math-display {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.75rem 0;
+  text-align: center;
+}
+.article-content .math-inline {
+  padding: 0 0.15em;
+}
+/* KaTeX block centering */
+.article-content .katex-display {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+.article-content .katex {
+  font-size: 1.05em !important;
+}
+.article-content .katex-display > .katex {
+  font-size: 1.15em !important;
+}
+
+/* ===== Footnotes (remark-footnotes) ===== */
+.article-content .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid oklch(0.88 0 0);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.dark .article-content .footnotes {
+  border-top-color: oklch(0.25 0 0);
+}
+.article-content .footnotes ol {
+  padding-left: 1.5rem;
+}
+.article-content .footnotes li {
+  margin-bottom: 0.5rem;
+}
+.article-content .footnotes p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+}
+/* Footnote back-reference icon */
+.article-content .footnotes a[data-footnote-backref] {
+  font-size: 0.8em;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.5;
+  margin-left: 0.25rem;
+}
+.article-content .footnotes a[data-footnote-backref]:hover {
+  opacity: 1;
+}
+/* Footnote ref superscript */
+.article-content sup a[data-footnote-ref] {
+  font-weight: 600;
+  text-decoration: none;
+  color: oklch(0.55 0.15 290);
+  transition: color 0.2s ease;
+}
+.article-content sup a[data-footnote-ref]:hover {
+  color: oklch(0.45 0.2 290);
+}
+.dark .article-content sup a[data-footnote-ref] {
+  color: oklch(0.7 0.15 290);
+}
+.dark .article-content sup a[data-footnote-ref]:hover {
+  color: oklch(0.8 0.2 290);
+}
+
+/* ===== Emoji Styling ===== */
+.article-content .emoji {
+  font-style: normal;
+  vertical-align: -0.1em;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.article-content .emoji:hover {
+  transform: scale(1.25);
+}
+
 /* ===== GitHub Alerts (GFM Callouts) ===== */
 .github-alert {
   margin: 1.5rem 0;
@@ -550,4 +638,257 @@ html {
   .dark .skeleton-shimmer::after {
     background: oklch(1 0 0 / 8%);
   }
+}
+
+/* ===== Enhanced Markdown Typography ===== */
+
+/* Headings with gradient accent */
+.article-content h1 {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+.article-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, oklch(0.6 0.2 var(--accent-h)), oklch(0.7 0.15 var(--accent-h)));
+  border-radius: 2px;
+}
+.article-content h2 {
+  position: relative;
+}
+.article-content h2::before {
+  content: '';
+  position: absolute;
+  left: -1.25rem;
+  top: 0.15em;
+  width: 4px;
+  height: 1.2em;
+  background: linear-gradient(180deg, oklch(0.6 0.2 var(--accent-h)), transparent);
+  border-radius: 2px;
+}
+
+/* Enhanced paragraph spacing */
+.article-content p + p {
+  margin-top: 0.75rem;
+}
+
+/* Enhanced links with animated underline */
+.article-content a {
+  position: relative;
+  background-image: linear-gradient(oklch(0.5 0.15 var(--accent-h)), oklch(0.5 0.15 var(--accent-h)));
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease, color 0.2s ease;
+}
+.article-content a:hover {
+  background-size: 100% 1px;
+}
+
+/* Enhanced blockquote with left gradient bar */
+.article-content blockquote {
+  position: relative;
+  border-left: none !important;
+}
+.article-content blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, oklch(0.6 0.2 var(--accent-h)), oklch(0.7 0.1 var(--accent-h) / 30%));
+  border-radius: 2px;
+}
+
+/* Enhanced lists with custom markers */
+.article-content ul {
+  list-style-type: none;
+  padding-left: 1.5rem;
+}
+.article-content ul li {
+  position: relative;
+}
+.article-content ul li::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: oklch(0.6 0.15 var(--accent-h));
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.article-content ul li:hover::before {
+  transform: scale(1.4);
+  background: oklch(0.55 0.2 var(--accent-h));
+}
+.article-content ol {
+  counter-reset: ol-counter;
+  padding-left: 1.5rem;
+}
+.article-content ol li {
+  counter-increment: ol-counter;
+  list-style: none;
+  position: relative;
+}
+.article-content ol li::before {
+  content: counter(ol-counter);
+  position: absolute;
+  left: -1.5rem;
+  top: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: oklch(0.94 0.01 var(--accent-h));
+  color: oklch(0.5 0.15 var(--accent-h));
+  font-size: 0.7em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.article-content ol li:hover::before {
+  background: oklch(0.5 0.15 var(--accent-h));
+  color: white;
+  transform: scale(1.1);
+}
+.dark .article-content ol li::before {
+  background: oklch(0.25 0.02 var(--accent-h));
+  color: oklch(0.7 0.15 var(--accent-h));
+}
+.dark .article-content ol li:hover::before {
+  background: oklch(0.7 0.15 var(--accent-h));
+  color: oklch(0.1 0 0);
+}
+
+/* Enhanced table with hover effects */
+.article-content table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.article-content th {
+  position: relative;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: oklch(0.35 0 0);
+}
+.dark .article-content th {
+  color: oklch(0.85 0 0);
+}
+.article-content td {
+  transition: background-color 0.15s ease;
+}
+.article-content tr:hover td {
+  background: oklch(0.96 0.01 var(--accent-h) / 50%);
+}
+.dark .article-content tr:hover td {
+  background: oklch(0.2 0.015 var(--accent-h) / 50%);
+}
+
+/* Enhanced horizontal rule */
+.article-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.6 0.15 var(--accent-h) / 40%),
+    oklch(0.6 0.15 var(--accent-h) / 60%),
+    oklch(0.6 0.15 var(--accent-h) / 40%),
+    transparent
+  );
+  margin: 2.5rem 0;
+  border-radius: 1px;
+}
+
+/* Enhanced inline code */
+.article-content code:not(pre code) {
+  position: relative;
+  background: oklch(0.96 0.01 var(--accent-h));
+  color: oklch(0.4 0.1 var(--accent-h));
+  border: 1px solid oklch(0.85 0.02 var(--accent-h));
+  border-radius: 0.375rem;
+  padding: 0.15em 0.45em;
+  font-size: 0.875em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.article-content code:not(pre code):hover {
+  background: oklch(0.92 0.02 var(--accent-h));
+  border-color: oklch(0.7 0.05 var(--accent-h));
+}
+.dark .article-content code:not(pre code) {
+  background: oklch(0.22 0.015 var(--accent-h));
+  color: oklch(0.8 0.1 var(--accent-h));
+  border-color: oklch(0.3 0.02 var(--accent-h));
+}
+.dark .article-content code:not(pre code):hover {
+  background: oklch(0.28 0.02 var(--accent-h));
+  border-color: oklch(0.45 0.05 var(--accent-h));
+}
+
+/* Enhanced images with subtle shadow */
+.article-content img {
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px oklch(0 0 0 / 8%);
+}
+.article-content img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 30px oklch(0 0 0 / 12%);
+}
+.dark .article-content img {
+  box-shadow: 0 4px 20px oklch(0 0 0 / 30%);
+}
+.dark .article-content img:hover {
+  box-shadow: 0 8px 30px oklch(0 0 0 / 45%);
+}
+
+/* Strong text with subtle color tint */
+.article-content strong {
+  color: oklch(0.2 0 0);
+  text-shadow: 0 0 0 oklch(0.6 0.15 var(--accent-h) / 15%);
+}
+.dark .article-content strong {
+  color: oklch(0.95 0 0);
+}
+
+/* Mark / highlight text */
+.article-content mark {
+  background: oklch(0.85 0.15 85);
+  color: inherit;
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+}
+
+/* Definition lists */
+.article-content dl {
+  border-left: 3px solid oklch(0.85 0.02 var(--accent-h));
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+.article-content dt {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: oklch(0.25 0 0);
+}
+.dark .article-content dt {
+  color: oklch(0.9 0 0);
+}
+.article-content dd {
+  margin-bottom: 0.75rem;
+  color: oklch(0.45 0 0);
+}
+.dark .article-content dd {
+  color: oklch(0.75 0 0);
 }

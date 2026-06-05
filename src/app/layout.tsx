@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/lib/site-config";
