@@ -228,8 +228,8 @@
   transform: scale(1.25);
 }
 
-/* ===== GitHub Alerts (GFM Callouts) — Enhanced ===== */
-.github-alert {
+/* ===== GitHub Alerts (via remark-github-blockquote-alert) ===== */
+.markdown-alert {
   position: relative;
   margin: 1.5rem 0;
   padding: 1rem 1.25rem 1.125rem;
@@ -238,149 +238,116 @@
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.github-alert:hover {
+.markdown-alert:hover {
   transform: translateX(2px);
   box-shadow: 0 2px 12px oklch(0 0 0 / 6%);
 }
-.dark .github-alert:hover {
+.dark .markdown-alert:hover {
   box-shadow: 0 2px 12px oklch(0 0 0 / 20%);
 }
 
-/* Alert header — icon + pill label */
-.github-alert-header {
+/* Alert title — SVG icon + label text */
+.markdown-alert-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
 }
-.github-alert-icon {
+.markdown-alert-title .octicon {
   width: 1rem;
   height: 1rem;
   flex-shrink: 0;
-  margin-top: 0.05rem;
 }
-.github-alert-label {
-  font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.1em 0.5em;
-  border-radius: 0.25rem;
-  line-height: 1.5;
+/* Body paragraphs */
+.markdown-alert > p:last-child {
+  margin-bottom: 0;
 }
-
-/* Alert body */
-.github-alert-body {
+.markdown-alert > p {
   font-size: 0.9375rem;
   line-height: 1.75;
-  color: oklch(0.3 0 0);
+  margin-bottom: 0.5rem;
 }
-.dark .github-alert-body {
-  color: oklch(0.82 0 0);
-}
-.github-alert-body > p { margin: 0; }
-.github-alert-body > p + p { margin-top: 0.5rem; }
-.github-alert-body > :first-child { margin-top: 0; }
-.github-alert-body > :last-child { margin-bottom: 0; }
 
 /* ===== NOTE — blue ===== */
-.github-alert-note {
+.markdown-alert-note {
   border-color: #0969da;
   background: oklch(0.975 0.01 240);
 }
-.github-alert-note .github-alert-icon { color: #0969da; }
-.github-alert-note .github-alert-label {
+.markdown-alert-note .markdown-alert-title {
   color: #0969da;
-  background: oklch(0.94 0.02 240);
 }
-.dark .github-alert-note {
+.dark .markdown-alert-note {
   border-color: #58a6ff;
   background: oklch(0.14 0.02 240);
 }
-.dark .github-alert-note .github-alert-icon { color: #58a6ff; }
-.dark .github-alert-note .github-alert-label {
+.dark .markdown-alert-note .markdown-alert-title {
   color: #58a6ff;
-  background: oklch(0.18 0.03 240);
 }
 
 /* ===== TIP — green ===== */
-.github-alert-tip {
+.markdown-alert-tip {
   border-color: #1a7f37;
   background: oklch(0.975 0.01 150);
 }
-.github-alert-tip .github-alert-icon { color: #1a7f37; }
-.github-alert-tip .github-alert-label {
+.markdown-alert-tip .markdown-alert-title {
   color: #1a7f37;
-  background: oklch(0.94 0.02 150);
 }
-.dark .github-alert-tip {
+.dark .markdown-alert-tip {
   border-color: #3fb950;
   background: oklch(0.14 0.02 150);
 }
-.dark .github-alert-tip .github-alert-icon { color: #3fb950; }
-.dark .github-alert-tip .github-alert-label {
+.dark .markdown-alert-tip .markdown-alert-title {
   color: #3fb950;
-  background: oklch(0.18 0.03 150);
 }
 
 /* ===== IMPORTANT — purple ===== */
-.github-alert-important {
+.markdown-alert-important {
   border-color: #8250df;
   background: oklch(0.975 0.01 295);
 }
-.github-alert-important .github-alert-icon { color: #8250df; }
-.github-alert-important .github-alert-label {
+.markdown-alert-important .markdown-alert-title {
   color: #8250df;
-  background: oklch(0.94 0.02 295);
 }
-.dark .github-alert-important {
+.dark .markdown-alert-important {
   border-color: #bc8cff;
   background: oklch(0.14 0.02 295);
 }
-.dark .github-alert-important .github-alert-icon { color: #bc8cff; }
-.dark .github-alert-important .github-alert-label {
+.dark .markdown-alert-important .markdown-alert-title {
   color: #bc8cff;
-  background: oklch(0.18 0.03 295);
 }
 
 /* ===== WARNING — amber ===== */
-.github-alert-warning {
+.markdown-alert-warning {
   border-color: #9a6700;
   background: oklch(0.975 0.018 85);
 }
-.github-alert-warning .github-alert-icon { color: #9a6700; }
-.github-alert-warning .github-alert-label {
+.markdown-alert-warning .markdown-alert-title {
   color: #9a6700;
-  background: oklch(0.94 0.025 85);
 }
-.dark .github-alert-warning {
+.dark .markdown-alert-warning {
   border-color: #d29922;
   background: oklch(0.14 0.025 85);
 }
-.dark .github-alert-warning .github-alert-icon { color: #d29922; }
-.dark .github-alert-warning .github-alert-label {
+.dark .markdown-alert-warning .markdown-alert-title {
   color: #d29922;
-  background: oklch(0.18 0.035 85);
 }
 
 /* ===== CAUTION — red ===== */
-.github-alert-caution {
+.markdown-alert-caution {
   border-color: #cf222e;
   background: oklch(0.975 0.018 25);
 }
-.github-alert-caution .github-alert-icon { color: #cf222e; }
-.github-alert-caution .github-alert-label {
+.markdown-alert-caution .markdown-alert-title {
   color: #cf222e;
-  background: oklch(0.94 0.025 25);
 }
-.dark .github-alert-caution {
+.dark .markdown-alert-caution {
   border-color: #f85149;
   background: oklch(0.14 0.025 25);
 }
-.dark .github-alert-caution .github-alert-icon { color: #f85149; }
-.dark .github-alert-caution .github-alert-label {
+.dark .markdown-alert-caution .markdown-alert-title {
   color: #f85149;
-  background: oklch(0.18 0.035 25);
 }
 
 /* ===== Task List (GFM Checkboxes) — Enhanced ===== */

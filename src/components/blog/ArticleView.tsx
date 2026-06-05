@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo, Children, isValidElement, type ReactNode } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -15,11 +15,6 @@ import {
   Copy,
   Check,
   ChevronRight,
-  Info,
-  Lightbulb,
-  Flame,
-  AlertTriangle,
-  Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -33,6 +28,7 @@ import { siteConfig } from '@/lib/site-config'
 import { type ArticleData } from '@/lib/article-utils'
 import CommentSection from './CommentSection'
 import remarkGfm from 'remark-gfm'
+import remarkGithubBlockquoteAlert from 'remark-github-blockquote-alert'
 import remarkMath from 'remark-math'
 import remarkFootnotes from 'remark-footnotes'
 import remarkEmoji from 'remark-emoji'
@@ -54,43 +50,6 @@ interface TocItem {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-/** GitHub Alert type config: class name, icon, label */
-const GITHUB_ALERTS: Record<string, { cls: string; icon: typeof Info; label: string }> = {
-  NOTE:     { cls: 'github-alert-note',     icon: Info,          label: 'Note' },
-  TIP:      { cls: 'github-alert-tip',      icon: Lightbulb,      label: 'Tip' },
-  IMPORTANT:{ cls: 'github-alert-important', icon: Flame,          label: 'Important' },
-  WARNING:  { cls: 'github-alert-warning',  icon: AlertTriangle,  label: 'Warning' },
-  CAUTION:  { cls: 'github-alert-caution',  icon: Zap,            label: 'Caution' },
-}
-
-/** Detect GitHub Alert syntax (`> [!TYPE]`) in blockquote children.
- *  Supports:
- *    > [!NOTE]
- *    > body text here
- *  and also:
- *    > [!NOTE] Body on the same line
- */
-function detectAlert(children: ReactNode): { type: string; rest: ReactNode[] } | null {
-  const arr = Children.toArray(children)
-  if (arr.length === 0) return null
-  const first = arr[0]
-  if (!isValidElement(first)) return null
-  const pKids = Children.toArray(first.props.children)
-  if (pKids.length === 0) return null
-  const text = typeof pKids[0] === 'string' ? (pKids[0] as string) : ''
-  // Match [!TYPE] at start of line, optionally followed by content on the same line
-  const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/i)
-  if (!match) return null
-  const type = match[1].toUpperCase()
-  const sameLineContent = match[2].trim()   // content after [!TYPE] on same line
-  const rest: ReactNode[] = arr.slice(1)
-  if (sameLineContent) {
-    // If there's content on the same line, inject it as the first <p>
-    rest.unshift(<p key="alert-inline">{sameLineContent}</p>)
-  }
-  return { type, rest }
-}
 
 /** Extract h2 / h3 headings from raw markdown (sequential IDs). */
 function extractHeadings(content: string): TocItem[] {
@@ -135,8 +94,11 @@ function calculateReadingTime(content: string): number {
 
 function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
   const [copied, setCopied] = useState(false)
-  const { theme, resolvedTheme: _resolvedTheme } = useTheme()
-  const resolvedTheme = _resolvedTheme === 'dark' ? 'dark' : 'light'
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+  useEffect(() => { setMounted(true) }, [])
+  // During SSR resolvedTheme is undefined; wait for mount to pick real theme
+  const isDark = mounted && resolvedTheme === 'dark'
   const codeText = String(children).replace(/\n$/, '')
 
   const handleCopy = async () => {
@@ -180,7 +142,7 @@ function CodeBlock({ language, children }: { language: string; children: React.R
         </button>
       </div>
       <SyntaxHighlighter
-        style={resolvedTheme === 'dark' ? oneDark : oneLight}
+        style={isDark ? oneDark : oneLight}
         language={language}
         PreTag="div"
         className="!m-0 !rounded-none text-[0.8125rem] leading-[1.7]"
@@ -403,7 +365,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
       {/* Article Content */}
       <article className="article-content mb-10">
         <ReactMarkdown
-          remarkPlugins={[remarkGfm, remarkMath, remarkFootnotes, remarkEmoji]}
+          remarkPlugins={[remarkGithubBlockquoteAlert, remarkGfm, remarkMath, remarkFootnotes, remarkEmoji]}
           rehypePlugins={[
             rehypeRaw,
             rehypeKatex,
@@ -412,7 +374,7 @@ export default function ArticleView({ article }: ArticleViewProps) {
               rehypeSanitize,
               {
                 attributes: {
-                  '*': ['className', 'id', 'style'],
+                  '*': ['className', 'id', 'style', 'dir'],
                   a: ['href', 'target', 'rel', 'dataFootnoteRef', 'dataFootnoteBackref', 'ariaDescribedby', 'ariaLabel'],
                   img: ['src', 'alt', 'loading', 'className'],
                   code: ['className'],
@@ -420,6 +382,9 @@ export default function ArticleView({ article }: ArticleViewProps) {
                   section: ['dataFootnotes'],
                   span: ['className', 'style', 'dataKatexDisplay'],
                   math: ['display', 'className'],
+                  svg: ['className', 'viewBox', 'width', 'height', 'ariaHidden', 'fill', 'stroke'],
+                  path: ['d'],
+                  div: ['className', 'dir'],
                   annotation: ['encoding', 'src'],
                   semantics: [],
                   mrow: [],
@@ -528,30 +493,19 @@ export default function ArticleView({ article }: ArticleViewProps) {
                 </li>
               )
             },
-            blockquote: ({ children }) => {
-              const alert = detectAlert(children)
-              if (alert) {
-                const config = GITHUB_ALERTS[alert.type]
-                if (config) {
-                  const Icon = config.icon
-                  return (
-                    <div className={cn('github-alert', config.cls)}>
-                      <div className="github-alert-header">
-                        <Icon className="github-alert-icon" strokeWidth={2.2} />
-                        <span className="github-alert-label">{config.label}</span>
-                      </div>
-                      {alert.rest.length > 0 && (
-                        <div className="github-alert-body">{alert.rest}</div>
-                      )}
-                    </div>
-                  )
-                }
+            blockquote: ({ children }) => (
+              <blockquote className="my-6 border-l-4 border-foreground/20 bg-muted/40 py-4 pl-5 pr-5 italic text-muted-foreground [&>p]:text-base">
+                {children}
+              </blockquote>
+            ),
+            div: ({ children, className, node, ...props }) => {
+              // Render GitHub Alert divs (produced by remark-github-blockquote-alert)
+              if (typeof className === 'string' && className.includes('markdown-alert')) {
+                return (
+                  <div className={className} {...props}>{children}</div>
+                )
               }
-              return (
-                <blockquote className="my-6 border-l-4 border-foreground/20 bg-muted/40 py-4 pl-5 pr-5 italic text-muted-foreground [&>p]:text-base">
-                  {children}
-                </blockquote>
-              )
+              return <div className={className} {...props}>{children}</div>
             },
             a: ({ href, children }) => (
               <a
