@@ -14,6 +14,12 @@ import {
   Tag,
   Copy,
   Check,
+  ChevronRight,
+  Info,
+  Lightbulb,
+  Flame,
+  AlertTriangle,
+  Zap,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -49,16 +55,22 @@ interface TocItem {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** GitHub Alert types mapping */
-const GITHUB_ALERTS: Record<string, string> = {
-  NOTE: 'github-alert-note',
-  TIP: 'github-alert-tip',
-  IMPORTANT: 'github-alert-important',
-  WARNING: 'github-alert-warning',
-  CAUTION: 'github-alert-caution',
+/** GitHub Alert type config: class name, icon, label */
+const GITHUB_ALERTS: Record<string, { cls: string; icon: typeof Info; label: string }> = {
+  NOTE:     { cls: 'github-alert-note',     icon: Info,          label: 'Note' },
+  TIP:      { cls: 'github-alert-tip',      icon: Lightbulb,      label: 'Tip' },
+  IMPORTANT:{ cls: 'github-alert-important', icon: Flame,          label: 'Important' },
+  WARNING:  { cls: 'github-alert-warning',  icon: AlertTriangle,  label: 'Warning' },
+  CAUTION:  { cls: 'github-alert-caution',  icon: Zap,            label: 'Caution' },
 }
 
-/** Detect GitHub Alert syntax (`> [!TYPE]`) in blockquote children. */
+/** Detect GitHub Alert syntax (`> [!TYPE]`) in blockquote children.
+ *  Supports:
+ *    > [!NOTE]
+ *    > body text here
+ *  and also:
+ *    > [!NOTE] Body on the same line
+ */
 function detectAlert(children: ReactNode): { type: string; rest: ReactNode[] } | null {
   const arr = Children.toArray(children)
   if (arr.length === 0) return null
@@ -67,9 +79,17 @@ function detectAlert(children: ReactNode): { type: string; rest: ReactNode[] } |
   const pKids = Children.toArray(first.props.children)
   if (pKids.length === 0) return null
   const text = typeof pKids[0] === 'string' ? (pKids[0] as string) : ''
-  const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/i)
+  // Match [!TYPE] at start of line, optionally followed by content on the same line
+  const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/i)
   if (!match) return null
-  return { type: match[1].toUpperCase(), rest: arr.slice(1) }
+  const type = match[1].toUpperCase()
+  const sameLineContent = match[2].trim()   // content after [!TYPE] on same line
+  const rest: ReactNode[] = arr.slice(1)
+  if (sameLineContent) {
+    // If there's content on the same line, inject it as the first <p>
+    rest.unshift(<p key="alert-inline">{sameLineContent}</p>)
+  }
+  return { type, rest }
 }
 
 /** Extract h2 / h3 headings from raw markdown (sequential IDs). */
@@ -497,17 +517,29 @@ export default function ArticleView({ article }: ArticleViewProps) {
                 {children}
               </ol>
             ),
-            li: ({ children }) => (
-              <li className="leading-[1.85]">{children}</li>
-            ),
+            li: ({ children, className }) => {
+              const isTaskItem = typeof className === 'string' && className.includes('task-list-item')
+              return (
+                <li className={cn(
+                  'leading-[1.85]',
+                  isTaskItem && 'task-list-item'
+                )}>
+                  {children}
+                </li>
+              )
+            },
             blockquote: ({ children }) => {
               const alert = detectAlert(children)
               if (alert) {
-                const cls = GITHUB_ALERTS[alert.type]
-                if (cls) {
+                const config = GITHUB_ALERTS[alert.type]
+                if (config) {
+                  const Icon = config.icon
                   return (
-                    <div className={cn('github-alert', cls)}>
-                      <p className="github-alert-title">{alert.type}</p>
+                    <div className={cn('github-alert', config.cls)}>
+                      <div className="github-alert-header">
+                        <Icon className="github-alert-icon" strokeWidth={2.2} />
+                        <span className="github-alert-label">{config.label}</span>
+                      </div>
                       {alert.rest.length > 0 && (
                         <div className="github-alert-body">{alert.rest}</div>
                       )}
@@ -580,14 +612,19 @@ export default function ArticleView({ article }: ArticleViewProps) {
               }
               return <input className={className} {...props} />
             },
-            details: ({ children }) => (
-              <details className="my-6 rounded-xl border border-border/50 bg-card shadow-sm transition-colors open:border-primary/20">
+            details: ({ children, open, ...props }) => (
+              <details
+                className="md-details"
+                open={open}
+                {...props}
+              >
                 {children}
               </details>
             ),
             summary: ({ children }) => (
-              <summary className="cursor-pointer px-4 py-3 font-medium text-foreground/80 select-none transition-colors hover:text-foreground hover:bg-muted/30">
-                {children}
+              <summary className="md-summary">
+                <ChevronRight className="md-summary-chevron" strokeWidth={2.5} />
+                <span className="md-summary-text">{children}</span>
               </summary>
             ),
           }}

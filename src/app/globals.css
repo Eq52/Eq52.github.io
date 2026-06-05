@@ -228,133 +228,211 @@
   transform: scale(1.25);
 }
 
-/* ===== GitHub Alerts (GFM Callouts) ===== */
+/* ===== GitHub Alerts (GFM Callouts) — Enhanced ===== */
 .github-alert {
+  position: relative;
   margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
+  padding: 1rem 1.25rem 1.125rem;
   border-left: 4px solid;
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0 0.625rem 0.625rem 0;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.github-alert-title {
+.github-alert:hover {
+  transform: translateX(2px);
+  box-shadow: 0 2px 12px oklch(0 0 0 / 6%);
+}
+.dark .github-alert:hover {
+  box-shadow: 0 2px 12px oklch(0 0 0 / 20%);
+}
+
+/* Alert header — icon + pill label */
+.github-alert-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.github-alert-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+.github-alert-label {
   font-weight: 700;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.06em;
+  padding: 0.1em 0.5em;
+  border-radius: 0.25rem;
+  line-height: 1.5;
 }
+
+/* Alert body */
 .github-alert-body {
   font-size: 0.9375rem;
-  line-height: 1.7;
+  line-height: 1.75;
+  color: oklch(0.3 0 0);
+}
+.dark .github-alert-body {
+  color: oklch(0.82 0 0);
 }
 .github-alert-body > p { margin: 0; }
 .github-alert-body > p + p { margin-top: 0.5rem; }
+.github-alert-body > :first-child { margin-top: 0; }
+.github-alert-body > :last-child { margin-bottom: 0; }
 
-/* NOTE — blue */
+/* ===== NOTE — blue ===== */
 .github-alert-note {
   border-color: #0969da;
-  background: oklch(0.97 0.008 240);
+  background: oklch(0.975 0.01 240);
 }
-.github-alert-note .github-alert-title { color: #0969da; }
-
-/* TIP — green */
-.github-alert-tip {
-  border-color: #1a7f37;
-  background: oklch(0.97 0.008 150);
+.github-alert-note .github-alert-icon { color: #0969da; }
+.github-alert-note .github-alert-label {
+  color: #0969da;
+  background: oklch(0.94 0.02 240);
 }
-.github-alert-tip .github-alert-title { color: #1a7f37; }
-
-/* IMPORTANT — purple */
-.github-alert-important {
-  border-color: #8250df;
-  background: oklch(0.97 0.008 295);
-}
-.github-alert-important .github-alert-title { color: #8250df; }
-
-/* WARNING — amber */
-.github-alert-warning {
-  border-color: #9a6700;
-  background: oklch(0.97 0.015 85);
-}
-.github-alert-warning .github-alert-title { color: #9a6700; }
-
-/* CAUTION — red */
-.github-alert-caution {
-  border-color: #cf222e;
-  background: oklch(0.97 0.015 25);
-}
-.github-alert-caution .github-alert-title { color: #cf222e; }
-
-/* Dark mode alerts */
 .dark .github-alert-note {
   border-color: #58a6ff;
-  background: oklch(0.16 0.015 240);
+  background: oklch(0.14 0.02 240);
 }
-.dark .github-alert-note .github-alert-title { color: #58a6ff; }
+.dark .github-alert-note .github-alert-icon { color: #58a6ff; }
+.dark .github-alert-note .github-alert-label {
+  color: #58a6ff;
+  background: oklch(0.18 0.03 240);
+}
 
+/* ===== TIP — green ===== */
+.github-alert-tip {
+  border-color: #1a7f37;
+  background: oklch(0.975 0.01 150);
+}
+.github-alert-tip .github-alert-icon { color: #1a7f37; }
+.github-alert-tip .github-alert-label {
+  color: #1a7f37;
+  background: oklch(0.94 0.02 150);
+}
 .dark .github-alert-tip {
   border-color: #3fb950;
-  background: oklch(0.16 0.015 150);
+  background: oklch(0.14 0.02 150);
 }
-.dark .github-alert-tip .github-alert-title { color: #3fb950; }
+.dark .github-alert-tip .github-alert-icon { color: #3fb950; }
+.dark .github-alert-tip .github-alert-label {
+  color: #3fb950;
+  background: oklch(0.18 0.03 150);
+}
 
+/* ===== IMPORTANT — purple ===== */
+.github-alert-important {
+  border-color: #8250df;
+  background: oklch(0.975 0.01 295);
+}
+.github-alert-important .github-alert-icon { color: #8250df; }
+.github-alert-important .github-alert-label {
+  color: #8250df;
+  background: oklch(0.94 0.02 295);
+}
 .dark .github-alert-important {
   border-color: #bc8cff;
-  background: oklch(0.16 0.015 295);
+  background: oklch(0.14 0.02 295);
 }
-.dark .github-alert-important .github-alert-title { color: #bc8cff; }
+.dark .github-alert-important .github-alert-icon { color: #bc8cff; }
+.dark .github-alert-important .github-alert-label {
+  color: #bc8cff;
+  background: oklch(0.18 0.03 295);
+}
 
+/* ===== WARNING — amber ===== */
+.github-alert-warning {
+  border-color: #9a6700;
+  background: oklch(0.975 0.018 85);
+}
+.github-alert-warning .github-alert-icon { color: #9a6700; }
+.github-alert-warning .github-alert-label {
+  color: #9a6700;
+  background: oklch(0.94 0.025 85);
+}
 .dark .github-alert-warning {
   border-color: #d29922;
-  background: oklch(0.16 0.02 85);
+  background: oklch(0.14 0.025 85);
 }
-.dark .github-alert-warning .github-alert-title { color: #d29922; }
+.dark .github-alert-warning .github-alert-icon { color: #d29922; }
+.dark .github-alert-warning .github-alert-label {
+  color: #d29922;
+  background: oklch(0.18 0.035 85);
+}
 
+/* ===== CAUTION — red ===== */
+.github-alert-caution {
+  border-color: #cf222e;
+  background: oklch(0.975 0.018 25);
+}
+.github-alert-caution .github-alert-icon { color: #cf222e; }
+.github-alert-caution .github-alert-label {
+  color: #cf222e;
+  background: oklch(0.94 0.025 25);
+}
 .dark .github-alert-caution {
   border-color: #f85149;
-  background: oklch(0.16 0.02 25);
+  background: oklch(0.14 0.025 25);
 }
-.dark .github-alert-caution .github-alert-title { color: #f85149; }
+.dark .github-alert-caution .github-alert-icon { color: #f85149; }
+.dark .github-alert-caution .github-alert-label {
+  color: #f85149;
+  background: oklch(0.18 0.035 25);
+}
 
-/* ===== Task List (GFM Checkboxes) ===== */
+/* ===== Task List (GFM Checkboxes) — Enhanced ===== */
 .task-list-checkbox {
   appearance: none;
   -webkit-appearance: none;
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid oklch(0.65 0 0);
-  border-radius: 0.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid oklch(0.6 0 0);
+  border-radius: 0.3rem;
   margin-right: 0.5rem;
   flex-shrink: 0;
   position: relative;
   top: 0.15rem;
   cursor: default;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
+  box-shadow: 0 1px 2px oklch(0 0 0 / 5%);
+}
+.task-list-checkbox:hover {
+  border-color: oklch(0.5 0.05 var(--accent-h));
+  box-shadow: 0 1px 4px oklch(0 0 0 / 10%);
 }
 .task-list-checkbox:checked {
-  background: oklch(0.35 0 0);
-  border-color: oklch(0.35 0 0);
+  background: oklch(0.5 0.12 var(--accent-h));
+  border-color: oklch(0.5 0.12 var(--accent-h));
+  box-shadow: 0 1px 4px oklch(0.5 0.12 var(--accent-h) / 25%);
 }
 .task-list-checkbox:checked::after {
   content: '';
   position: absolute;
-  left: 0.15rem;
+  left: 0.2rem;
   top: 0rem;
   width: 0.4rem;
-  height: 0.6rem;
+  height: 0.65rem;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 .dark .task-list-checkbox {
   border-color: oklch(0.5 0 0);
+  box-shadow: 0 1px 2px oklch(0 0 0 / 15%);
+}
+.dark .task-list-checkbox:hover {
+  border-color: oklch(0.65 0.05 var(--accent-h));
 }
 .dark .task-list-checkbox:checked {
-  background: oklch(0.92 0 0);
-  border-color: oklch(0.92 0 0);
+  background: oklch(0.65 0.12 var(--accent-h));
+  border-color: oklch(0.65 0.12 var(--accent-h));
 }
 .dark .task-list-checkbox:checked::after {
-  border-color: oklch(0.15 0 0);
+  border-color: oklch(0.1 0 0);
 }
 
 .article-content .task-list-item {
@@ -400,46 +478,126 @@
   border-width: 0;
 }
 
-/* ===== Details / Summary (Raw HTML) ===== */
-.article-content details:not([class]) {
+/* ===== Details / Summary — Enhanced ===== */
+.md-details {
+  position: relative;
   margin: 1.5rem 0;
   border: 1px solid oklch(0.88 0 0);
   border-radius: 0.75rem;
   overflow: hidden;
-  background: oklch(0.988 0 0);
+  background: oklch(0.99 0 0);
+  box-shadow: 0 1px 4px oklch(0 0 0 / 4%);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.dark .article-content details:not([class]) {
+.md-details:hover {
+  box-shadow: 0 2px 8px oklch(0 0 0 / 7%);
+}
+.dark .md-details {
   border-color: oklch(0.25 0 0);
   background: oklch(0.14 0 0);
+  box-shadow: 0 1px 4px oklch(0 0 0 / 15%);
 }
-.article-content details:not([class])[open] {
-  border-color: oklch(0.7 0.01 290);
+.dark .md-details:hover {
+  box-shadow: 0 2px 8px oklch(0 0 0 / 25%);
 }
-.dark .article-content details:not([class])[open] {
-  border-color: oklch(0.45 0.01 290);
+.md-details[open] {
+  border-color: oklch(0.65 0.08 var(--accent-h));
+  box-shadow: 0 2px 12px oklch(0 0 0 / 6%);
 }
-.article-content details:not([class]) > summary {
+.dark .md-details[open] {
+  border-color: oklch(0.45 0.08 var(--accent-h));
+  box-shadow: 0 2px 12px oklch(0 0 0 / 20%);
+}
+
+/* Summary — chevron icon + text */
+.md-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  font-weight: 500;
-  color: oklch(0.4 0 0);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: oklch(0.3 0 0);
   user-select: none;
-  transition: background 0.15s ease;
+  list-style: none;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-.article-content details:not([class]) > summary:hover {
-  background: oklch(0.96 0 0);
+.md-summary::-webkit-details-marker {
+  display: none;
 }
-.dark .article-content details:not([class]) > summary {
-  color: oklch(0.85 0 0);
+.md-summary::marker {
+  display: none;
+  content: '';
 }
-.dark .article-content details:not([class]) > summary:hover {
-  background: oklch(0.18 0 0);
+.md-summary:hover {
+  background: oklch(0.96 0.005 var(--accent-h));
+  color: oklch(0.22 0 0);
 }
-.article-content details:not([class]) > :not(summary) {
+.dark .md-summary {
+  color: oklch(0.88 0 0);
+}
+.dark .md-summary:hover {
+  background: oklch(0.2 0.01 var(--accent-h));
+  color: oklch(0.95 0 0);
+}
+
+/* Chevron — rotates when open */
+.md-summary-chevron {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: oklch(0.55 0.05 var(--accent-h));
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+.md-summary:hover .md-summary-chevron {
+  color: oklch(0.45 0.1 var(--accent-h));
+}
+.dark .md-summary-chevron {
+  color: oklch(0.6 0.05 var(--accent-h));
+}
+.dark .md-summary:hover .md-summary-chevron {
+  color: oklch(0.7 0.1 var(--accent-h));
+}
+.md-details[open] > .md-summary .md-summary-chevron {
+  transform: rotate(90deg);
+}
+
+/* Summary text */
+.md-summary-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+/* Details body content */
+.md-details > :not(summary) {
   padding: 0 1rem 1rem;
 }
-.article-content details:not([class]) > :not(summary):first-of-type {
+.md-details > :not(summary):first-of-type {
   padding-top: 0;
+}
+/* Add top divider when open */
+.md-details[open] > :not(summary):first-of-type {
+  padding-top: 0.75rem;
+  margin-top: 0;
+  border-top: 1px solid oklch(0.9 0 0);
+  padding-top: 0.875rem;
+}
+.dark .md-details[open] > :not(summary):first-of-type {
+  border-top-color: oklch(0.25 0 0);
+}
+
+/* Nested details */
+.md-details .md-details {
+  margin: 0.75rem 0;
+  border-color: oklch(0.9 0 0);
+}
+.dark .md-details .md-details {
+  border-color: oklch(0.28 0 0);
+}
+.md-details .md-details > .md-summary {
+  font-size: 0.875rem;
+  padding: 0.625rem 0.875rem;
 }
 
 /* Scrollbar uses accent color */
@@ -706,14 +864,14 @@ html {
 }
 
 /* Enhanced lists with custom markers */
-.article-content ul {
+.article-content ul:not(.contains-task-list) {
   list-style-type: none;
   padding-left: 1.5rem;
 }
-.article-content ul li {
+.article-content ul:not(.contains-task-list) li {
   position: relative;
 }
-.article-content ul li::before {
+.article-content ul:not(.contains-task-list) li::before {
   content: '';
   position: absolute;
   left: -1rem;
@@ -724,7 +882,7 @@ html {
   background: oklch(0.6 0.15 var(--accent-h));
   transition: transform 0.2s ease, background 0.2s ease;
 }
-.article-content ul li:hover::before {
+.article-content ul:not(.contains-task-list) li:hover::before {
   transform: scale(1.4);
   background: oklch(0.55 0.2 var(--accent-h));
 }
