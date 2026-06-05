@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
+import { useTheme } from 'next-themes'
 import { Skeleton } from '@/components/ui/skeleton'
 import { siteConfig } from '@/lib/site-config'
 
@@ -8,15 +9,48 @@ interface CommentSectionProps {
   articleId: string
 }
 
+const GISCUS_THEMES = {
+  dark: 'dark_high_contrast',
+  light: 'light_high_contrast',
+} as const
+
 export default function CommentSection({ articleId }: CommentSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
 
+  // Wait for mount so resolvedTheme is available
+  useEffect(() => { setMounted(true) }, [])
+
+  // Dynamically update Giscus theme when it changes
+  const updateGiscusTheme = useCallback((theme: string | undefined) => {
+    if (!theme) return
+    const giscusTheme = theme === 'dark' ? GISCUS_THEMES.dark : GISCUS_THEMES.light
+
+    // Update data-theme attribute on the script tag
+    const scriptEl = containerRef.current?.querySelector('script[src*="giscus"]')
+    if (scriptEl) {
+      scriptEl.setAttribute('data-theme', giscusTheme)
+    }
+
+    // Also post message to the Giscus iframe to update theme live
+    const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame')
+    if (iframe) {
+      iframe.contentWindow?.postMessage(
+        { giscus: { setConfig: { theme: giscusTheme } } },
+        'https://giscus.app',
+      )
+    }
+  }, [])
+
+  // Effect: initialize Giscus script
   useEffect(() => {
     if (!siteConfig.giscus.enabled) return
-    if (loaded) return
+    if (loaded || !mounted) return
 
-    // Inject the Giscus script
+    const theme = resolvedTheme === 'dark' ? GISCUS_THEMES.dark : GISCUS_THEMES.light
+
     const scriptEl = document.createElement('script')
     scriptEl.src = 'https://giscus.app/client.js'
     scriptEl.async = true
@@ -30,7 +64,7 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
     scriptEl.setAttribute('data-reactions-enabled', siteConfig.giscus.reactionsEnabled)
     scriptEl.setAttribute('data-emit-metadata', siteConfig.giscus.emitMetadata)
     scriptEl.setAttribute('data-input-position', 'top')
-    scriptEl.setAttribute('data-theme', 'preferred_color_scheme')
+    scriptEl.setAttribute('data-theme', theme)
     scriptEl.setAttribute('data-lang', siteConfig.giscus.lang)
     scriptEl.setAttribute('data-loading', 'lazy')
 
@@ -54,7 +88,14 @@ export default function CommentSection({ articleId }: CommentSectionProps) {
       clearTimeout(fallback)
       window.removeEventListener('message', handleMessage)
     }
-  }, [articleId, loaded])
+  }, [articleId, loaded, mounted, resolvedTheme])
+
+  // Effect: react to theme changes after Giscus is loaded
+  useEffect(() => {
+    if (loaded && mounted) {
+      updateGiscusTheme(resolvedTheme)
+    }
+  }, [resolvedTheme, loaded, mounted, updateGiscusTheme])
 
   if (!siteConfig.giscus.enabled) return null
 
